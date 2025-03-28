@@ -15,4 +15,4 @@ jobs:
         run: |
           gh variable set LATEST_COMMIT_ID --body "${{ github.sha }}"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
