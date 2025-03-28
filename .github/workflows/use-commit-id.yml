@@ -13,4 +13,4 @@ jobs:
           commit_id=$(gh variable get LATEST_COMMIT_ID)
           echo "Commit ID: $commit_id"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
