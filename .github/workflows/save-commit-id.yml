@@ -1,13 +1,21 @@
 name: Save Commit ID
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   save-commit:
     runs-on: ubuntu-latest
-    outputs:
-      commit_id: ${{ steps.commit_step.outputs.commit_id }}
     steps:
-      - name: Get commit ID
-        id: commit_step
-        run: echo "commit_id=${{ github.sha }}" >> $GITHUB_OUTPUT
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Save commit ID
+        run: echo ${{ github.sha }} > commit_id.txt
+
+      - name: Upload commit ID as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: commit-id
+          path: commit_id.txt
