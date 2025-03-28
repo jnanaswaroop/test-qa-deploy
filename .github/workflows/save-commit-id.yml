@@ -10,12 +10,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get current commit ID
-        id: get_commit_id
-        run: echo "commit_id=${{ github.sha }}" >> $GITHUB_ENV
+        run: echo "commit_id=${{ github.sha }}" > commit_id.txt
 
       - name: Save commit ID as artifact
         uses: actions/upload-artifact@v2
         with:
           name: commit-id
           path: commit_id.txt
-        run: echo "${{ env.commit_id }}" > commit_id.txt
