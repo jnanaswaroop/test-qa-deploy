@@ -16,3 +16,4 @@ jobs:
           gh variable set LATEST_COMMIT_ID --body "${{ github.sha }}"
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
