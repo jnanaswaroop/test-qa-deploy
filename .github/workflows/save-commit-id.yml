@@ -11,11 +11,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Save commit ID
-        run: echo ${{ github.sha }} > commit_id.txt
-
-      - name: Upload commit ID as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: commit-id
-          path: commit_id.txt
+      - name: Save commit ID in GitHub Repository Variable
+        run: |
+          gh variable set LATEST_COMMIT_ID --body "${{ github.sha }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
