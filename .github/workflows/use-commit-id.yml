@@ -1,23 +1,13 @@
 name: Use Commit ID
-
-on: [workflow_dispatch]
+on:
+  workflow_run:
+    workflows: ["Save Commit ID"]
+    types:
+      - completed
 
 jobs:
-  use-commit-id:
+  use-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Download commit ID artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: commit-id
-          path: .
-
-      - name: Read commit ID
-        id: read_commit_id
-        run: echo "commit_id=$(cat commit_id.txt)" >> $GITHUB_ENV
-
-      - name: Use commit ID
-        run: echo "The commit ID from the previous workflow is ${{ env.commit_id }}"
+      - name: Get commit ID
+        run: echo "Commit ID received: ${{ needs.save-commit.outputs.commit_id }}"
