@@ -8,9 +8,18 @@ jobs:
   use-commit:
     runs-on: ubuntu-latest
     steps:
+      - name: Authenticate GitHub CLI
+        run: gh auth status
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Retrieve Commit ID from Repository Variable
         run: |
-          commit_id=$(gh variable get LATEST_COMMIT_ID)
+          commit_id=$(gh variable get LATEST_COMMIT_ID --repo ${{ github.repository }})
+          if [[ -z "$commit_id" ]]; then
+            echo "Error: Commit ID variable is empty or not found!"
+            exit 1
+          fi
           echo "Commit ID: $commit_id"
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
