@@ -1,14 +1,18 @@
 name: Use Commit ID
 on:
-  workflow_run:
-    workflows: ["Save Commit ID"]
-    types:
-      - completed
+  schedule:
+    - cron: '0 0 * * *'  # Runs once a day
 
 jobs:
   use-commit:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Only runs if previous workflow was successful
     steps:
-      - name: Get commit ID
-        run: echo "Commit ID received: ${{ needs.save-commit.outputs.commit_id }}"
+      - name: Download commit ID artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: commit-id
+
+      - name: Read commit ID
+        run: |
+          commit_id=$(cat commit_id.txt)
+          echo "Commit ID: $commit_id"
