@@ -13,7 +13,7 @@ jobs:
         run: echo "commit_id=${{ github.sha }}" > commit_id.txt
 
       - name: Save commit ID as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: commit-id
           path: commit_id.txt
