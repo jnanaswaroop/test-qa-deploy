@@ -8,12 +8,9 @@ jobs:
   use-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Download commit ID artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: commit-id
-
-      - name: Read commit ID
+      - name: Retrieve Commit ID from Repository Variable
         run: |
-          commit_id=$(cat commit_id.txt)
+          commit_id=$(gh variable get LATEST_COMMIT_ID)
           echo "Commit ID: $commit_id"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
