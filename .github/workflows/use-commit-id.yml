@@ -2,6 +2,7 @@ name: Use Commit ID
 on:
   schedule:
     - cron: '0 0 * * *'  # Runs once a day
+  workflow_dispatch:
 
 jobs:
   use-commit:
